@@ -42,6 +42,7 @@ Custom Database
 ```
  데이터를 post 할 때는
  dbClient.postData(data) 해주시면 됩니다.
+ 
  argument로 들어가는 data의 스키마는 아래와 같아야합니다.
 ```
 
