@@ -38,9 +38,13 @@ DBClient.prototype.postData = function(data){
     this.data.push(data);
 
     var fileName = this.db_directory + '/' + data['id'] + '.json';
-    fileHandler.writeJSONFile(fileName, data);
+    
+    try{
+        fileHandler.writeJSONFile(fileName, data);
+   }catch(exception){
+        return exception;
+   }
 }
-
 
 DBClient.prototype.getDataAry = function(){
     if(fileHandler.existFileOrDir(this.db_directory)){
