@@ -12,7 +12,7 @@ Custom Database
  require로 dbClient를 가져옵니다.
 
  예로 QRCodeGenerator/routes 안의 파일에서는
- var DBClient = require('../../../Database/dbClient')로 가져오면 됩니다.
+ DBClient = require('../../../Database/dbClient')로 가져오면 됩니다.
 ```
 
 * DBClient 객체 만들기
