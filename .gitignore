@@ -1,2 +1,4 @@
 Safe-QRCode-Call/node_modules/
 package-lock.json
+Safe-QRCode-Call/package-lock.json
+Safe-QRCode-Call/**/package-lock.json
