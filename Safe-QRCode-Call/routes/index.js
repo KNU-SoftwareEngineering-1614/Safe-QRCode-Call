@@ -7,8 +7,21 @@ router.get('/', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../views', 'index.html'));
 });
 
+// it is rough code, so we will fix it
 router.get('/*.(css|js|jpg|svg|png)', function(req, res, next) {
-  //console.log(req.originalUrl);
+  //console.log("get : '/*.(css|js|jpg|svg|png) : ", req.originalUrl);
+  let splitUrl = req.originalUrl.split("/");
+  //console.log(splitUrl);
+  if (splitUrl[1] == "login") {
+    res.sendFile(path.join(__dirname, '../views', splitUrl[2]));
+  }
+  else {
+    res.sendFile(path.join(__dirname, '../views', req.originalUrl));
+  }
+});
+
+router.get('/*.html', function(req, res, next) {
+  console.log("  get: '/*.html' router : ", req.originalUrl)
   res.sendFile(path.join(__dirname, '../views', req.originalUrl));
 });
 

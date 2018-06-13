@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/*.(css|js|jpg|svg|png)', function(req, res, next) {
-  //console.log(req.originalUrl);
+  console.log("get : 'login/*.(css|js|jpg|svg|png) : ", req.originalUrl);
   res.sendFile(path.join(__dirname, '../views', req.originalUrl));
 });
 
