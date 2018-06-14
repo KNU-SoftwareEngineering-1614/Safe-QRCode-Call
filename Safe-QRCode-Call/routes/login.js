@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var session = require('express-session');
-var dbaddr = "localhost:8081/database";
-var qrgenaddr = "localhost:9531/qrgen";
+var dbaddr = "http://localhost:8081/database";
+var qrCodeAddr = "http://localhost:3000/qrCode";
 var request = require('request');
 
 router.use(session({
@@ -31,7 +31,7 @@ router.get('/vendor/*', function(req, res, next) {
 
 router.post('/afterlogin',function(req,res){
   console.log("Login request : ID: "+ req.body.id + " PassWord: " + req.body.password);
-  var dbreqAddr = 'http://' + dbaddr + "/getUser/" + req.body.id;
+  var dbreqAddr = '' + dbaddr + "/getUser/" + req.body.id;
   console.log("dbRequest address: " + dbreqAddr);
   
   var registerToDBOptions = {
@@ -49,20 +49,20 @@ router.post('/afterlogin',function(req,res){
       console.log("DB Error! afterlogin");
     }
    });
-   console.log("user data : " + userData["password"]);
+   //console.log("user data : " + userData["password"]);
 
   req.session.username = req.body.id;
   req.session.save(function(){});
   console.log("Login session : ID: "+ req.session.username);
   res.render(path.join(__dirname, '../views', 'afterlogin.ejs'),{
-    id : req.session.username
+    id : req.body.id
   }); 
 
 });
 
 router.post('/requestSignIn',function(req,res){
   console.log("ID: " + req.body.id + " Password: " + req.body.password + " PhoneNumber: " + req.body.phoneNumber);
-  var DBreqUrl =  'http://' + dbaddr + "/postUser/" + req.body.id;
+  var DBreqUrl =  dbaddr + "/postUser/" + req.body.id;
 
   console.log("requet URL:" + DBreqUrl);
 
@@ -88,7 +88,7 @@ router.post('/requestSignIn',function(req,res){
     }
    });
 
-   var qrGenReqUrl =  'http://' + qrgenaddr + "/" + req.body.id;
+   var qrGenReqUrl =  qrCodeAddr + "/qrGen/" + req.body.phoneNumber;
    console.log("requet URL:" + qrGenReqUrl);
 
    var qrgenOptions = {
@@ -105,6 +105,8 @@ router.post('/requestSignIn',function(req,res){
       console.log("DB Error! qrgen");
     }
    });
+
+   res.redirect("http://localhost:3000");
 
 
 });
