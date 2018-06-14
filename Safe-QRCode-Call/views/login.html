@@ -9,14 +9,17 @@ margin: 200px 100px 100px 100px;
 }
 </style>
 <body>
-<body style="background-color:lightGray;">
-<div>
-<h1 style="text-align:center;"><a href="carsafe.html">CarSafe</a></h1>
-<form method="post" action="/login/afterlogin">
-<p style="text-align:center;"><input type="id" name="id" value="id"></p>
-<p style="text-align:center;"><input type="password" name="password" value="password"></p>
-<p style="text-align:center;"><input type="submit" value="Login"></a>
-</form>
-</div>
-</body>
+    <body style="background-color:lightGray;">
+        <div>
+        <h1 style="text-align:center;"><a href="carsafe.html">CarSafe</a></h1>
+            <form method="post" action="/login/afterlogin">
+                <p style="text-align:center;"><input type="id" name="id" value="id"></p>
+                <p style="text-align:center;"><input type="password" name="password" value="password"></p>
+                <p style="text-align:center;"><input type="submit" value="Login"></a>
+            </form>
+            <form method="get" action="/login/signIn">
+                <p style="text-align:center;"><input type="submit" value="SignIn"></a>
+            </form>
+        </div>
+    </body>
 </html>

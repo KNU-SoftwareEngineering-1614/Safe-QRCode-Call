@@ -12,15 +12,15 @@ margin: 200px 100px 100px 100px;
 <body style="background-color:lightGray;">
 <div>
 <h1 style="text-align:center;"><a href="carsafe.html">CarSafe</a></h1>
-<form action="">
-<p style="text-align:center;">ID:<br>
-<input type="text" name="id"></p>
-<p style="text-align:center;"> pw:<br> 
-<input type="password" name="password"></p>
-<p style="text-align:center;">phonenumber: <br>
-<input type="text" name="phonenumber"></p><br>
-<p style="text-align:center;"><input type="submit" value="Join">
+    <form method="post" action="/login/requestSignIn">
+        <p style="text-align:center;">ID:<br>
+        <input type="text" name="id"></p>
+        <p style="text-align:center;"> pw:<br> 
+        <input type="password" name="password"></p>
+        <p style="text-align:center;">phonenumber: <br>
+        <input type="text" name="phoneNumber"></p><br>
+        <p style="text-align:center;"><input type="submit" value="Join"></p>
+    </form>
 </div>
-</form>
 </body>
 </html>

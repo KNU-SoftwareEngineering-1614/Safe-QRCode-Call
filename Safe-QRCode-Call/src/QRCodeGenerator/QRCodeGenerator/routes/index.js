@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
 });
 
 router.get('/qrGen/:phoneNum', function (req, res) {
-    fs.writeFileSync(req.params.phoneNum + '.png', qr.imageSync("http://127.0.0.1:1337/qrShow/" + req.params.phoneNum));
+    fs.writeFileSync("../../../../QRData/" + req.params.phoneNum + '.png', qr.imageSync("http://127.0.0.1:9531/qrShow/" + req.params.phoneNum));
     res.render('index', { title: 'QR Code Generated!' });
 })
 
