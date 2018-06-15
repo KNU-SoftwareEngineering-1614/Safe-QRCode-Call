@@ -2,7 +2,11 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var session = require('express-session');
+
+//db 접근 주소
 var dbaddr = "http://localhost:8081/database";
+
+//qr코드 관련 처리 접근 주소
 var qrCodeAddr = "http://localhost:3000/qrCode";
 var request = require('request');
 
@@ -131,7 +135,7 @@ router.post('/requestSignUp',function(req,res){
    });
 
    //시작페이지로 돌아감
-   res.redirect("http://localhost:3000");
+   res.redirect("/");
 });
 
 //QR코드 확인 페이지
