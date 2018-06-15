@@ -70,6 +70,7 @@ router.post('/requestLogin',function(req,res){
     //로그인 성공
     //클라이언트의 세션에 아이디를 저장시킴
     req.session.username = req.body.id;
+    req.session.fake_num = response.body.data.fake_num;
     req.session.save(function(){});
     console.log("Login session : ID: "+ req.session.username);
 
@@ -133,13 +134,15 @@ router.post('/requestSignUp',function(req,res){
    res.redirect("http://localhost:3000");
 });
 
-//QR코드 요청
+//QR코드 확인 페이지
+//fake_num 이름을 가진 QR코드 이미지 파일을 탐색
 router.get('/myQrCode',function(req,res){
-  console.log("myQrCode request : ID: "+ req.session.username);
-  var qrCodeFileName = 
+  var filename = path.join(__dirname,"../../QRData/" , req.session.fake_num + ".png");
+  res.sendFile(filename);
+  console.log("requested QRCode File : " + filename);
 
   res.render(path.join(__dirname, '../views', 'myQR.ejs'),{
-    qr_image : req.session.username + ".jpg"
+    qr_image : "010231546.png"
   }); 
 });
 

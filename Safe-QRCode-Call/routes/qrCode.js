@@ -4,6 +4,9 @@ var router = express.Router();
 var qr = require('qr-image');
 var fs = require('fs');
 var path = require('path');
+
+//qr 코드를 찍으면 qrCodeShowAddr + "/" + fakenum 으로 연결됩니다.
+//qr 코드 생성시에도 이 변수를 사용합니다.
 var qrCodeShowAddr = "http://192.168.0.74:3000/qrCode/qrShow/";
 
 /* GET home page. */
@@ -11,16 +14,23 @@ router.get('/', function (req, res) {
     //res.render('index', { title: 'Express' });
 });
 
-router.get('/qrGen/:phoneNum', function (req, res) {
-    console.log("Qr code Gen : " + req.params.phoneNum);
-    fs.writeFileSync("../QRData/" + req.params.phoneNum + '.png', qr.imageSync(qrCodeShowAddr + req.params.phoneNum));
-    //res.render('index', { title: 'QR Code Generated!' });
+//fakeNum 을 정보로 qr코드를 생성
+router.get('/qrGen/:fakeNum', function (req, res) {
+    console.log("Qr code Gen : " + req.params.fakeNum);
+    
+    //데이터 보관소에 보관 (myQR 페이지에서 이 디렉토리에 있는 파일은 정적 파일 전송 문제로 전송이 불가능함. 그래서 주석처리하였습니다.)
+    //fs.writeFileSync("../QRData/" + req.params.fakeNum + '.png', qr.imageSync(qrCodeShowAddr + req.params.fakeNum));
+    
+    //view폴더 안에 qr코드 이미지 파일을 넣습니다.
+    fs.writeFileSync("views/" + req.params.fakeNum + '.png', qr.imageSync(qrCodeShowAddr + req.params.fakeNum));
+    //res.render('index', { title: 'QR Code fakeNum!' });
 })
 
-router.get('/qrShow/:phoneNum', function (req, res) {
-    console.log("QR show request : " + req.params.phoneNum);
+//QR코드를 찍으면 해당 QR코드안에 들어있는 정보를 페이지에 띄워줌
+router.get('/qrShow/:fakeNum', function (req, res) {
+    console.log("QR show request : " + req.params.fakeNum);
     res.render(path.join(__dirname, '../views', 'qrShow.ejs'),{
-        phoneNumber : req.params.phoneNum
+        fakeNum : req.params.fakeNum
     }); 
 })
 module.exports = router;
