@@ -29,7 +29,7 @@ router.get('/vendor/*', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../views', splitUrl[0]));
 });
 
-router.post('/afterlogin',function(req,res){
+router.post('/requestLogin',function(req,res){
   console.log("Login request : ID: "+ req.body.id + " PassWord: " + req.body.password);
   var dbreqAddr = '' + dbaddr + "/getUser/" + req.body.id;
   console.log("dbRequest address: " + dbreqAddr);
@@ -47,16 +47,24 @@ router.post('/afterlogin',function(req,res){
   request(registerToDBOptions, function(error, response, body){
     if(error){
       console.log("DB Error! afterlogin");
+      return;
     }
+    if(response.body.error){
+      console.log("No User ID : " + req.body.id + " message from DB "+ response.body.error);
+      return;
+    }
+    if(req.body.password != response.body.data.password){
+      console.log("Password incorrect: " + req.body.password + " (wrong password)");
+      return;
+    }    
+    req.session.username = req.body.id;
+    req.session.save(function(){});
+    console.log("Login session : ID: "+ req.session.username);
+    res.render(path.join(__dirname, '../views', 'afterlogin.ejs'),{
+      id : req.body.id
+    }); 
    });
    //console.log("user data : " + userData["password"]);
-
-  req.session.username = req.body.id;
-  req.session.save(function(){});
-  console.log("Login session : ID: "+ req.session.username);
-  res.render(path.join(__dirname, '../views', 'afterlogin.ejs'),{
-    id : req.body.id
-  }); 
 
 });
 
@@ -120,8 +128,8 @@ router.get('/myQrCode',function(req,res){
   }); 
 });
 
-router.get('/signIn',function(req,res){
-  console.log("signIn page accessed");
+router.get('/signUp',function(req,res){
+  console.log("signUp page accessed");
 
   res.sendFile(path.join(__dirname, '../views', 'join.html'));
 });
