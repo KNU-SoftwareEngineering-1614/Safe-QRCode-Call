@@ -29,12 +29,18 @@ router.get('/vendor/*', function(req, res, next) {
   res.sendFile(path.join(__dirname, '../views', splitUrl[0]));
 });
 
+//로그인 버튼 클릭시 호출됨
+//id 로 db에게 사용자 정보를 얻어오고, 비밀번호를 비교해서 진행여부 판단
+//없는 아이디거나 비밀번호가 다르면 콘솔에만 출력되고, 웹페이지는 다음 페이지로 넘어가지 않음
 router.post('/requestLogin',function(req,res){
   console.log("Login request : ID: "+ req.body.id + " PassWord: " + req.body.password);
+
+  //DB에게 사용자 정보를 얻어오기 위한 요청용 URL
   var dbreqAddr = '' + dbaddr + "/getUser/" + req.body.id;
   console.log("dbRequest address: " + dbreqAddr);
   
-  var registerToDBOptions = {
+  //DB에게 사용자 정보를 얻어오기 위한 옵션
+  var DBGetDataOption = {
     url: dbreqAddr,
     method: "GET",
     json: true,
@@ -43,23 +49,30 @@ router.post('/requestLogin',function(req,res){
     }
   };
 
-  var userData;
-  request(registerToDBOptions, function(error, response, body){
-    if(error){
-      console.log("DB Error! afterlogin");
+  request(DBGetDataOption, function(error, response, body){
+
+    //요청에 실패할 경우
+    if(error){  
+      console.log("DB Connection Error! afterlogin");
       return;
     }
+    //ID가 없는 ID 인 경우
     if(response.body.error){
       console.log("No User ID : " + req.body.id + " message from DB "+ response.body.error);
       return;
     }
+    //비밀번호를 검사하여 다를 경우
     if(req.body.password != response.body.data.password){
       console.log("Password incorrect: " + req.body.password + " (wrong password)");
       return;
-    }    
+    }
+
+    //로그인 성공
+    //클라이언트의 세션에 아이디를 저장시킴
     req.session.username = req.body.id;
     req.session.save(function(){});
     console.log("Login session : ID: "+ req.session.username);
+    
     res.render(path.join(__dirname, '../views', 'afterlogin.ejs'),{
       id : req.body.id
     }); 
@@ -68,7 +81,7 @@ router.post('/requestLogin',function(req,res){
 
 });
 
-router.post('/requestSignIn',function(req,res){
+router.post('/requestSignUp',function(req,res){
   console.log("ID: " + req.body.id + " Password: " + req.body.password + " PhoneNumber: " + req.body.phoneNumber);
   var DBreqUrl =  dbaddr + "/postUser/" + req.body.id;
 
