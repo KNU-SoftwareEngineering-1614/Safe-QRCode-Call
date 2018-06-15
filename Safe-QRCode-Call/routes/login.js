@@ -72,7 +72,7 @@ router.post('/requestLogin',function(req,res){
     req.session.username = req.body.id;
     req.session.save(function(){});
     console.log("Login session : ID: "+ req.session.username);
-    
+
     res.render(path.join(__dirname, '../views', 'afterlogin.ejs'),{
       id : req.body.id
     }); 
@@ -81,6 +81,8 @@ router.post('/requestLogin',function(req,res){
 
 });
 
+//회원가입 요청
+//세부사항은 로그인 요청과 유사함
 router.post('/requestSignUp',function(req,res){
   console.log("ID: " + req.body.id + " Password: " + req.body.password + " PhoneNumber: " + req.body.phoneNumber);
   var DBreqUrl =  dbaddr + "/postUser/" + req.body.id;
@@ -127,20 +129,21 @@ router.post('/requestSignUp',function(req,res){
     }
    });
 
+   //시작페이지로 돌아감
    res.redirect("http://localhost:3000");
-
-
 });
 
-
+//QR코드 요청
 router.get('/myQrCode',function(req,res){
   console.log("myQrCode request : ID: "+ req.session.username);
+  var qrCodeFileName = 
 
   res.render(path.join(__dirname, '../views', 'myQR.ejs'),{
-    qr_image : req.session.username + "qr-img.jpg"
+    qr_image : req.session.username + ".jpg"
   }); 
 });
 
+//회원가입 페이지
 router.get('/signUp',function(req,res){
   console.log("signUp page accessed");
 
