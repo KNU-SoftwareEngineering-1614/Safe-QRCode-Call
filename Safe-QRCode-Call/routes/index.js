@@ -21,8 +21,10 @@ router.get('/*.(css|js|jpg|svg|png)', function(req, res, next) {
 });
 
 router.get('/*.html', function(req, res, next) {
-  console.log("  get: '/*.html' router : ", req.originalUrl)
-  res.sendFile(path.join(__dirname, '../views', req.originalUrl));
+  //console.log("  get: '/*.html' router : ", req.originalUrl);
+  let splitUrl = req.originalUrl.split("/");
+  console.log(splitUrl[splitUrl.length - 1]);
+  res.sendFile(path.join(__dirname, '../views', splitUrl[splitUrl.length - 1]));
 });
 
 router.get('/vendor/*', function(req, res, next) {
