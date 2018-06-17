@@ -3,3 +3,5 @@ node_modules/
 package-lock.json
 Safe-QRCode-Call/package-lock.json
 Safe-QRCode-Call/**/package-lock.json
+QRData/*
+Safe-QRCode-Call/views/*.png
