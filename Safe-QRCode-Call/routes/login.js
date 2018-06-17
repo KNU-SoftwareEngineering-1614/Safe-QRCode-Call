@@ -146,7 +146,7 @@ router.get('/myQrCode',function(req,res){
   console.log("requested QRCode File : " + filename);
 
   res.render(path.join(__dirname, '../views', 'myQR.ejs'),{
-    qr_image : "010231546.png"
+    qr_image : req.session.fake_num + ".png"
   }); 
 });
 

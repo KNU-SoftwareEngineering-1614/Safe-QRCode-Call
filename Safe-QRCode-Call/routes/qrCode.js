@@ -8,7 +8,7 @@ var path = require('path');
 //qr 코드를 찍으면 qrCodeShowAddr + "/" + fakenum 으로 연결됩니다.
 //qr 코드 생성시에도 이 변수를 사용합니다.
 //테스트 해보려면 이 주소를 테스트하는 PC의 주소로 써서 생성해야합니다.
-var qrCodeShowAddr = "http://192.168.0.74:3000/qrCode/qrShow/";
+var qrCodeShowAddr = "http://172.30.1.33:3000/qrCode/qrShow/";
 
 /* GET home page. */
 router.get('/', function (req, res) {

@@ -2,6 +2,9 @@
   "name": "safe-qrcode-call",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "start": "node app"
+  },
   "dependencies": {
     "express": "^4.14.0",
     "ejs": "^2.6.1",
